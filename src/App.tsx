@@ -1,15 +1,19 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Layout from "./layout";
+import Movies from "./pages/movies";
+import NewMovie from "./pages/newMovie";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div>Test</div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<Movies />} />
+          <Route path="/new" element={<NewMovie />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

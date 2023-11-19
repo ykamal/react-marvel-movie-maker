@@ -1,7 +1,9 @@
 import React, { createContext, useEffect, useReducer } from "react";
+import { Movie } from "./types";
 
 const getMoviesFromLocalstorage = () => {
-  return localStorage.getItem("movies") ?? [];
+  const movies = localStorage.getItem("yk_movies");
+  return movies ? JSON.parse(movies) : [];
 };
 
 // Define initial state
@@ -15,8 +17,8 @@ const REMOVE_MOVIE = "REMOVE_MOVIE";
 
 // Define reducer function to handle state updates
 const moviesReducer = (
-  state: { movies: any[] },
-  action: { type: any; movie: any; id: any }
+  state: { movies: Movie[] },
+  action: { type: string; movie: Movie; id: string }
 ) => {
   switch (action.type) {
     case ADD_MOVIE:
@@ -42,7 +44,7 @@ export const RootContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(moviesReducer, initialState);
 
   useEffect(() => {
-    localStorage.setItem("movies", JSON.stringify(state.movies));
+    localStorage.setItem("yk_movies", JSON.stringify(state.movies));
   }, [state]);
 
   return (
