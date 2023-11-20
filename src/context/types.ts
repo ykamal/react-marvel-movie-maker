@@ -1,4 +1,4 @@
-export type Movie = {
+export interface Movie {
     id: string;
     title: string,
     synopsis: string;
@@ -8,7 +8,8 @@ export type Movie = {
     status: "SAVED" | "DRAFT"
 }
 
-export type Character = {
+export interface Character {
+    id: number;
     name: string;
     portrait: string;
 }

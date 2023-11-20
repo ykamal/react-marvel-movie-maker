@@ -15,7 +15,7 @@ export default function MenuLinks() {
   ];
 
   const links = menuLinks.map((link) => (
-    <li>
+    <li key={link.href}>
       <a
         className="text-gray-500 transition hover:text-gray-500/75"
         href={link.href}
