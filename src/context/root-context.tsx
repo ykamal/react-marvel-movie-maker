@@ -14,6 +14,7 @@ const initialState = {
 // Define action types
 const ADD_MOVIE = "ADD_MOVIE";
 const REMOVE_MOVIE = "REMOVE_MOVIE";
+const UPDATE_MOVIE = "UPDATE_MOVIE";
 
 // Define reducer function to handle state updates
 const moviesReducer = (
@@ -26,6 +27,18 @@ const moviesReducer = (
         ...state,
         movies: [...state.movies, action.movie],
       };
+
+    case UPDATE_MOVIE:
+      return {
+        ...state,
+        movies: state.movies.map((movie: Movie) => {
+          if (movie.id === action.id) {
+            return { ...movie, ...action.movie };
+          }
+          return movie;
+        }),
+      };
+
     case REMOVE_MOVIE:
       return {
         ...state,

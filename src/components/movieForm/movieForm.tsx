@@ -1,10 +1,17 @@
 import { Character, Movie } from "../../context/types";
-import React, { useEffect, useReducer, useRef, useState } from "react";
-import useCharacterSearch from "../../lib/api";
+import React, {
+  useContext,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
+import { redirect } from "react-router-dom";
 import nameSearch from "../../lib/api";
 import CharacterCard from "./characterCard";
 import Draggable from "./draggable";
 import Droppable from "./droppable";
+import { RootContext } from "../../context/root-context";
 
 interface MovieProps {
   movie?: Movie;
@@ -29,6 +36,7 @@ enum ACTIONS {
   SET_HEROES = "SET_HEROES",
   SET_VILLAINS = "SET_VILLAINS",
   SET_CAMEOS = "SET_CAMEOS",
+  SET_STATUS = "SET_STATUS",
 }
 
 interface MovieFormState {
@@ -37,7 +45,7 @@ interface MovieFormState {
 
 interface MovieReducerAction {
   type: ACTIONS;
-  payload: string | Character[];
+  payload: string | Character[] | "DRAFT" | "SAVED" | Movie;
 }
 
 const movieReducer = (
@@ -60,6 +68,15 @@ const movieReducer = (
         movie: {
           ...state.movie,
           synopsis: action.payload as string,
+        },
+      };
+
+    case ACTIONS.SET_STATUS:
+      return {
+        ...state,
+        movie: {
+          ...state.movie,
+          status: action.payload as "DRAFT" | "SAVED",
         },
       };
 
@@ -110,6 +127,8 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
   const [state, stateDispatch] = useReducer(movieReducer, {
     movie: movie ?? newMovieData,
   });
+
+  const { state: rootState, dispatch } = useContext(RootContext);
 
   const { movie: movieData } = state;
 
@@ -191,6 +210,19 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
     }
   };
 
+  const handleSubmit = (e: SubmitEvent) => {
+    e.preventDefault();
+    console.log({ movieData });
+    if (movieData.status === "DRAFT")
+      stateDispatch({ type: ACTIONS.SET_STATUS, payload: "SAVED" });
+    // TODO: turn into enum
+    if (isNew)
+      dispatch({ type: "ADD_MOVIE", movie: movieData, id: movieData.id });
+    if (!isNew)
+      dispatch({ type: "UPDATE_MOVIE", movie: movieData, id: movieData.id });
+    return redirect("/");
+  };
+
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedName(name), 500);
 
@@ -221,7 +253,11 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
     <section id="movieForm">
       <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="rounded-lg bg-white p-8 shadow-lg lg:p-12">
-          <form action="#" className="space-y-4">
+          <form
+            action="#"
+            className="space-y-4"
+            onSubmit={(e) => handleSubmit(e)}
+          >
             <h1 className="text-left text-2xl font-bold text-purple-600 sm:text-3xl">
               {isNew ? "Add a new movie" : `Update Movie`}
             </h1>
@@ -236,6 +272,13 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
                 type="text"
                 id="title"
                 maxLength={50}
+                value={movieData.title}
+                onChange={(e) =>
+                  stateDispatch({
+                    type: ACTIONS.SET_TITLE,
+                    payload: e.target.value,
+                  })
+                }
               />
             </div>
 
@@ -250,6 +293,13 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
                 rows={4}
                 id="synopsys"
                 maxLength={150}
+                value={movieData.synopsis}
+                onChange={(e) =>
+                  stateDispatch({
+                    type: ACTIONS.SET_SYNOPSIS,
+                    payload: e.target.value,
+                  })
+                }
               ></textarea>
             </div>
 
@@ -262,24 +312,26 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
             </p>
 
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
-              <div className="h-32 rounded-lg bg-gray-200">
+              <div className="rounded-lg bg-gray-200">
                 <p>Characters</p>
                 <input
                   type="text"
                   value={name}
-                  onChange={(e) => setName(e.target.value.trim())}
+                  onChange={(e) => setName(e.target.value)}
                 />
-                {characters.map((character) => (
-                  <Draggable
-                    key={character.id}
-                    uid={character.id}
-                    dragStart={() => (currentDraggedItem.current = character)}
-                  >
-                    <CharacterCard {...character} />
-                  </Draggable>
-                ))}
+                <div className="min-h-[150px] max-h-[500px] overflow-y-auto">
+                  {characters.map((character) => (
+                    <Draggable
+                      key={character.id}
+                      uid={character.id}
+                      dragStart={() => (currentDraggedItem.current = character)}
+                    >
+                      <CharacterCard {...character} />
+                    </Draggable>
+                  ))}
+                </div>
               </div>
-              <div className="h-32 rounded-lg bg-gray-200 lg:col-span-2">
+              <div className="min-h-[150px] rounded-lg bg-gray-200 lg:col-span-2 pb-10">
                 {castRows.map(({ title, max, data }) => (
                   <Droppable
                     key={title}
@@ -305,7 +357,7 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
                 type="submit"
                 className="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto"
               >
-                Send Enquiry
+                {movieData.status === "SAVED" ? "UPDATE" : "SAVE"}
               </button>
             </div>
           </form>
