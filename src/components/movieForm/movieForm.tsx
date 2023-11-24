@@ -9,9 +9,13 @@ import React, {
 import { redirect } from "react-router-dom";
 import nameSearch from "../../lib/api";
 import CharacterCard from "./characterCard";
-import Draggable from "./draggable";
 import Droppable from "./droppable";
 import { RootContext } from "../../context/root-context";
+import CharacterList from "./characterList";
+import {
+  ACTIONS,
+  movieFormReducer,
+} from "../../context/reducers/movieFormReducer";
 
 interface MovieProps {
   movie?: Movie;
@@ -27,91 +31,6 @@ const newMovieData: Movie = {
   status: "DRAFT",
 };
 
-/**
- * Setting up state actions via reducers
- */
-enum ACTIONS {
-  SET_TITLE = "SET_TITLE",
-  SET_SYNOPSIS = "SET_SYNOPSIS",
-  SET_HEROES = "SET_HEROES",
-  SET_VILLAINS = "SET_VILLAINS",
-  SET_CAMEOS = "SET_CAMEOS",
-  SET_STATUS = "SET_STATUS",
-}
-
-interface MovieFormState {
-  movie: Movie;
-}
-
-interface MovieReducerAction {
-  type: ACTIONS;
-  payload: string | Character[] | "DRAFT" | "SAVED" | Movie;
-}
-
-const movieReducer = (
-  state: MovieFormState,
-  action: MovieReducerAction
-): MovieFormState => {
-  switch (action.type) {
-    case ACTIONS.SET_TITLE:
-      return {
-        ...state,
-        movie: {
-          ...state.movie,
-          title: action.payload as string,
-        },
-      };
-
-    case ACTIONS.SET_SYNOPSIS:
-      return {
-        ...state,
-        movie: {
-          ...state.movie,
-          synopsis: action.payload as string,
-        },
-      };
-
-    case ACTIONS.SET_STATUS:
-      return {
-        ...state,
-        movie: {
-          ...state.movie,
-          status: action.payload as "DRAFT" | "SAVED",
-        },
-      };
-
-    case ACTIONS.SET_HEROES:
-      return {
-        ...state,
-        movie: {
-          ...state.movie,
-          heroes: action.payload as Character[],
-        },
-      };
-
-    case ACTIONS.SET_VILLAINS:
-      return {
-        ...state,
-        movie: {
-          ...state.movie,
-          villains: action.payload as Character[],
-        },
-      };
-
-    case ACTIONS.SET_CAMEOS:
-      return {
-        ...state,
-        movie: {
-          ...state.movie,
-          cameos: action.payload as Character[],
-        },
-      };
-
-    default:
-      return state;
-  }
-};
-
 // interface for the api response
 interface MarvelResponse {
   id: number;
@@ -121,10 +40,11 @@ interface MarvelResponse {
 
 const MovieForm: React.FC<MovieProps> = ({ movie }) => {
   const [name, setName] = useState("");
+  const [loading, setLoading] = useState(false);
   const [debouncedName, setDebouncedName] = useState(name);
   const [characters, setCharacters] = useState<Character[]>([]);
 
-  const [state, stateDispatch] = useReducer(movieReducer, {
+  const [state, stateDispatch] = useReducer(movieFormReducer, {
     movie: movie ?? newMovieData,
   });
 
@@ -212,7 +132,6 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
 
   const handleSubmit = (e: SubmitEvent) => {
     e.preventDefault();
-    console.log({ movieData });
     if (movieData.status === "DRAFT")
       stateDispatch({ type: ACTIONS.SET_STATUS, payload: "SAVED" });
     // TODO: turn into enum
@@ -232,6 +151,7 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
   }, [name]);
 
   useEffect(() => {
+    setLoading(true);
     nameSearch(debouncedName)
       .then((resp) =>
         setCharacters(
@@ -246,7 +166,8 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
             : []
         )
       )
-      .catch((error) => console.log({ error }));
+      .catch((error) => console.log({ error }))
+      .finally(() => setLoading(false));
   }, [debouncedName]);
 
   return (
@@ -311,27 +232,29 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
               on the right. You can also search for a character.
             </p>
 
-            <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:gap-8">
-              <div className="rounded-lg bg-gray-200">
-                <p>Characters</p>
+            <div className="grid grid-cols-1 gap-4 lg:grid-cols-5 lg:gap-8">
+              <div className="rounded-lg">
                 <input
+                  className={`w-full rounded-lg border-gray-200 p-3 text-sm mb-2 ${
+                    loading ? "bg-gray-200" : ""
+                  }`}
+                  placeholder="Search for characters"
                   type="text"
+                  disabled={loading}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
-                <div className="min-h-[150px] max-h-[500px] overflow-y-auto">
-                  {characters.map((character) => (
-                    <Draggable
-                      key={character.id}
-                      uid={character.id}
-                      dragStart={() => (currentDraggedItem.current = character)}
-                    >
-                      <CharacterCard {...character} />
-                    </Draggable>
-                  ))}
+                <div className="min-h-[300px] max-h-[640px] overflow-y-auto overflow-x-hidden">
+                  <CharacterList
+                    loading={loading}
+                    characters={characters}
+                    dragStart={(character) =>
+                      (currentDraggedItem.current = character)
+                    }
+                  />
                 </div>
               </div>
-              <div className="min-h-[150px] rounded-lg bg-gray-200 lg:col-span-2 pb-10">
+              <div className="min-h-[150px] rounded-lg bg-gray-200 lg:col-span-4 pb-10">
                 {castRows.map(({ title, max, data }) => (
                   <Droppable
                     key={title}
@@ -355,7 +278,7 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
             <div className="mt-4">
               <button
                 type="submit"
-                className="inline-block w-full rounded-lg bg-black px-5 py-3 font-medium text-white sm:w-auto"
+                className="block w-full rounded-lg bg-black px-5 py-3 font-medium text-white"
               >
                 {movieData.status === "SAVED" ? "UPDATE" : "SAVE"}
               </button>

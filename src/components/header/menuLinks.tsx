@@ -1,3 +1,5 @@
+import { Link, useLocation, useRoutes } from "react-router-dom";
+
 export default function MenuLinks() {
   const menuLinks: { title: string; href: string }[] = [
     {
@@ -8,20 +10,22 @@ export default function MenuLinks() {
       title: "Add New",
       href: "/new",
     },
-    {
-      title: "About",
-      href: "/about",
-    },
   ];
+
+  const location = useLocation();
+
+  const { pathname } = location;
 
   const links = menuLinks.map((link) => (
     <li key={link.href}>
-      <a
-        className="text-gray-500 transition hover:text-gray-500/75"
-        href={link.href}
+      <Link
+        className={`text-gray-500 transition hover:text-gray-500/75 ${
+          pathname === link.href ? "text-purple-900 font-bold" : ""
+        }`}
+        to={link.href}
       >
         {link.title}
-      </a>
+      </Link>
     </li>
   ));
 

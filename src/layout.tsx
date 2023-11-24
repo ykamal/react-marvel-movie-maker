@@ -1,8 +1,8 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Logo from "./components/header/logo";
-import MenuLinks from "./components/header/menuLinks";
-import HamburgerIcon from "./components/header/hamburger";
+import Logo from "./components/header/Logo";
+import MenuLinks from "./components/header/MenuLinks";
+import HamburgerIcon from "./components/header/Hamburger";
 
 export default function Layout() {
   return (

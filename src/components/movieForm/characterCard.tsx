@@ -20,7 +20,10 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
       }`}
     >
       {withClear && onClear && (
-        <button className="absolute top-0 right-2" onClick={() => onClear()}>
+        <button
+          className="inline-flex items-center justify-center w-4 h-4 text-pink-100 transition-colors duration-150 bg-pink-700 rounded-lg focus:shadow-outline hover:bg-pink-800 text-sm absolute top-1 right-1"
+          onClick={() => onClear()}
+        >
           &times;
         </button>
       )}

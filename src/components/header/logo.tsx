@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
+
 export default function Logo() {
   return (
-    <a className="block text-teal-600" href="/">
+    <Link className="block text-teal-600" to="/">
       <span className="sr-only">Home</span>
       <svg
         fill="#000000"
@@ -15,6 +17,6 @@ export default function Logo() {
           fill="purple"
         />
       </svg>
-    </a>
+    </Link>
   );
 }
