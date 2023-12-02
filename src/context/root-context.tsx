@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useReducer } from "react";
+import React, { Dispatch, createContext, useEffect, useReducer } from "react";
 import { Movie } from "./types";
 
 const getMoviesFromLocalstorage = () => {
@@ -49,8 +49,24 @@ const moviesReducer = (
   }
 };
 
+interface RootState {
+  movies: Movie[];
+}
+
+interface RootContextType {
+  state: RootState;
+  dispatch: Dispatch<{
+    type: string;
+    movie: Movie;
+    id: string;
+  }>;
+}
+
 // Create context
-export const RootContext = createContext({ state: {}, dispatch: () => {} });
+export const RootContext = createContext<RootContextType>({
+  state: { movies: [] },
+  dispatch: () => {},
+});
 
 // Create provider component
 export const RootContextProvider = ({ children }) => {

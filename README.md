@@ -12,7 +12,7 @@ On the homepage, you can see your movies with the cast information. On the creat
 The goal is to demonstrate javascript code in react. The UI looks ...decent, but not amazing as that was not a goal for this project.
 
 ## Inspiration
-- **No Frameworks**: To refrain from using React frameworks like Remix or Next. To simply use Vite to create a fast react application to demonstrate that ability.
+- **No Frameworks**: To refrain from using React frameworks like Remix or Next. To simply use Vite to create a fast react application to demonstrate that ability. Demonstrate usage of default and custom react hooks.
 - **Demonstrate HTML API usage without any libraries**: The project uses HTML `Drag & Drop` API usage without using any NPM libraries. To also demonstrate limits on such action by a MAX parameter on the droppable component.
 - **Demonstrate browser API usage**: This project uses `LocalStorage` to persist data between different sessions. This persists the `App` state's movies list. This does not use a 3rd party library, rather react's `useEffect` hook with the `Context API`.
 - **No UI Libraries**: To simplify CSS styling, I am using `Tailwind`. But no other UI libraries should be in use. To demonstrate matters like `animation` and `grid` with `responsiveness`.
