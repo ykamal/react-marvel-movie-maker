@@ -9,7 +9,7 @@ export interface Movie {
 }
 
 export interface Character {
-    id: number;
+    id: string;
     name: string;
     portrait: string;
 }

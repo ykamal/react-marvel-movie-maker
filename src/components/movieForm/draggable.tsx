@@ -15,7 +15,7 @@ const Draggable: React.FC<DraggableProps> = ({
 }) => {
   return (
     <div
-      className="relative flex w-48 flex-col rounded-xl bg-clip-border text-gray-700 my-2 cursor-move"
+      className="relative flex w-full xs:w-full flex-col rounded-xl bg-clip-border text-gray-700 cursor-move"
       key={uid}
       draggable
       onDragStart={() => dragStart(uid)}

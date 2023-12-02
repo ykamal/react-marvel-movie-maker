@@ -1,3 +1,10 @@
+import { Swiper, SwiperSlide } from "swiper/react";
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+
+import { Navigation } from "swiper/modules";
+
 import { Character } from "../../context/types";
 import CharacterCard from "./characterCard";
 import Draggable from "./draggable";
@@ -16,7 +23,7 @@ const CharacterList: React.FC<CharacterListProps> = ({
   return (
     <>
       {loading && (
-        <div className="p-1 flex items-center">
+        <div className="p-1 flex items-center overflow-hidden ">
           <svg
             aria-hidden="true"
             className="w-4 h-4 me-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
@@ -36,15 +43,62 @@ const CharacterList: React.FC<CharacterListProps> = ({
           <p>Loading...</p>
         </div>
       )}
-      {characters.map((character) => (
-        <Draggable
-          key={character.id}
-          uid={character.id}
-          dragStart={() => dragStart(character)}
+      {/* desktop */}
+      <div className="hidden lg:block py-3  card-gradient-bg rounded-md">
+        <div className="wrap min-h-[300px] max-h-[500px] overflow-y-auto overflow-x-hidden styledScrollBar px-2 grid gap-4 rounded-md">
+          {characters.map((character) => (
+            <Draggable
+              key={character.id}
+              uid={character.id}
+              dragStart={() => dragStart(character)}
+            >
+              <CharacterCard {...character} />
+            </Draggable>
+          ))}
+        </div>
+      </div>
+
+      {/* mobile */}
+      <div className="mobile overflow-hidden lg:hidden">
+        <Swiper
+          breakpoints={{
+            0: {
+              slidesPerView: 1,
+            },
+
+            350: {
+              slidesPerView: 2,
+            },
+
+            420: {
+              slidesPerView: 3,
+            },
+
+            768: {
+              slidesPerView: 4,
+            },
+          }}
+          noSwiping={true}
+          navigation={true}
+          modules={[Navigation]}
+          spaceBetween={20}
+          allowTouchMove={false}
+          noSwipingClass="swiper-no-swiping"
+          className="overflow-hidden max-w-[86vw] md:max-w-[82vw]"
         >
-          <CharacterCard {...character} />
-        </Draggable>
-      ))}
+          {characters.map((character) => (
+            <SwiperSlide key={character.id}>
+              <Draggable
+                key={character.id}
+                uid={character.id}
+                dragStart={() => dragStart(character)}
+              >
+                <CharacterCard {...character} />
+              </Draggable>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
     </>
   );
 };

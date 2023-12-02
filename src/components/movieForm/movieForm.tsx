@@ -172,17 +172,25 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
 
   return (
     <section id="movieForm">
-      <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-        <div className="rounded-lg bg-white p-8 shadow-lg lg:p-12">
+      <div className="mx-auto max-w-screen-xl xs:px-4 py-16 md:px-6 lg:px-8">
+        <div className="rounded-lg bg-white md:p-8 shadow-lg">
           <form
             action="#"
             className="space-y-4"
             onSubmit={(e) => handleSubmit(e)}
           >
-            <h1 className="text-left text-2xl font-bold text-purple-600 sm:text-3xl">
-              {isNew ? "Add a new movie" : `Update Movie`}
-            </h1>
+            <div className="flex justify-between">
+              <h1 className="text-left text-2xl font-bold text-purple-900 sm:text-3xl">
+                {isNew ? "Add a new movie" : `Update Movie`}
+              </h1>
 
+              <button
+                type="submit"
+                className="hidden sm:block justify-center rounded-lg bg-purple-900 px-5 py-3 font-medium text-white"
+              >
+                {movieData.status === "SAVED" ? "UPDATE" : "SAVE"}
+              </button>
+            </div>
             <div>
               <label className="sr-only" htmlFor="title">
                 Title
@@ -224,16 +232,35 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
               ></textarea>
             </div>
 
+            <div className="btn sm:hidden flex justify-end mb-4">
+              <button
+                type="submit"
+                className="rounded-lg bg-purple-900 px-5 py-3 font-medium text-white"
+              >
+                {movieData.status === "SAVED" ? "UPDATE" : "SAVE"}
+              </button>
+            </div>
+
             {/* Cast */}
-
-            <h2 className="text-left">Cast</h2>
-            <p>
-              Drag and drop a character from the Caracters list to the sections
-              on the right. You can also search for a character.
-            </p>
-
-            <div className="grid grid-cols-1 gap-4 lg:grid-cols-5 lg:gap-8">
-              <div className="rounded-lg">
+            <div className="hidden lg:grid lg:grid-cols-11 lg:gap-8">
+              <h2
+                className="text-left font-bold text-purple-900 col-span-2"
+                style={{ fontSize: "1.2rem" }}
+              >
+                Cast
+              </h2>
+              <p className="text-left align-center font-bold text-purple-900 col-span-9">
+                Drag and drop a character from the Caracters list to the
+                sections on the right. You can also search for a character
+              </p>
+            </div>
+            <div className="grid lg:grid-cols-11 lg:gap-8">
+              <div className="heading lg:hidden">
+                <h2 className="text-left font-bold text-purple-900 text-[1.2rem]">
+                  Cast
+                </h2>
+              </div>
+              <div className="rounded-lg lg:col-span-2">
                 <input
                   className={`w-full rounded-lg border-gray-200 p-3 text-sm mb-2 ${
                     loading ? "bg-gray-200" : ""
@@ -244,44 +271,45 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
-                <div className="min-h-[300px] max-h-[640px] overflow-y-auto overflow-x-hidden">
-                  <CharacterList
-                    loading={loading}
-                    characters={characters}
-                    dragStart={(character) =>
-                      (currentDraggedItem.current = character)
-                    }
-                  />
+
+                <CharacterList
+                  loading={loading}
+                  characters={characters}
+                  dragStart={(character) =>
+                    (currentDraggedItem.current = character)
+                  }
+                />
+              </div>
+              <div className="min-h-[150px] rounded-lg  lg:col-span-9">
+                <div className="heading lg:hidden mb-4">
+                  <p
+                    className="text-start font-bold
+                   text-purple-900"
+                  >
+                    Drag and drop a character from the Caracters list to the
+                    below sections.You can also search for a character
+                  </p>
+                </div>
+                <div className="wrap flex flex-col lg:grid h-full gap-2">
+                  {castRows.map(({ title, max, data }) => (
+                    <Droppable
+                      key={title}
+                      title={`${title}: (max: ${max})`}
+                      onDrop={() => handleDrop(title, max)}
+                    >
+                      {data.map((character) => (
+                        <CharacterCard
+                          variant="small"
+                          withClear={true}
+                          onClear={() => handleRemoval(character.id, title)}
+                          key={"castRow_" + character.id}
+                          {...character}
+                        />
+                      ))}
+                    </Droppable>
+                  ))}
                 </div>
               </div>
-              <div className="min-h-[150px] rounded-lg bg-gray-200 lg:col-span-4 pb-10">
-                {castRows.map(({ title, max, data }) => (
-                  <Droppable
-                    key={title}
-                    title={`${title}: (max: ${max})`}
-                    onDrop={() => handleDrop(title, max)}
-                  >
-                    {data.map((character) => (
-                      <CharacterCard
-                        variant="small"
-                        withClear={true}
-                        onClear={() => handleRemoval(character.id, title)}
-                        key={"castRow_" + character.id}
-                        {...character}
-                      />
-                    ))}
-                  </Droppable>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-4">
-              <button
-                type="submit"
-                className="block w-full rounded-lg bg-black px-5 py-3 font-medium text-white"
-              >
-                {movieData.status === "SAVED" ? "UPDATE" : "SAVE"}
-              </button>
             </div>
           </form>
         </div>

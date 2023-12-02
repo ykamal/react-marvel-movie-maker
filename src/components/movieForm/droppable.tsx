@@ -10,7 +10,7 @@ const Droppable: React.FC<DroppableProps> = ({ title, children, onDrop }) => {
   const [draggedOver, setDraggedOver] = useState(false);
   return (
     <div
-      className={`min-h-[100px] rounded m-2 p-4 bg-white ${
+      className={`h-[100px] lg:min-h-[140px] rounded-2xl border-4 p-4 bg-white card-gradient-bg ${
         draggedOver ? "border-dotted border-2 border-purple-500 inset" : ""
       }`}
       key={title}
@@ -24,9 +24,9 @@ const Droppable: React.FC<DroppableProps> = ({ title, children, onDrop }) => {
         onDrop();
       }}
     >
-      <h3 className="text-lg text-left px-1 py-2">{title}</h3>
+      <h3 className="text-lg text-left px-1 font-semibold text-slate-800">{title}</h3>
 
-      <div className="flex flex-row">{children}</div>
+      <div className="flex flex-row gap-4 mt-2">{children}</div>
     </div>
   );
 };

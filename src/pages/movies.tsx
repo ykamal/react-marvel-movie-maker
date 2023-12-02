@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { RootContext } from "../context/root-context";
 import NoMoviesFound from "../components/movies/noMoviesFound";
 import CharacterCard from "../components/movieForm/characterCard";
-import { Link } from "react-router-dom";
 import MovieCard from "../components/movies/movieCard";
 
 export default function Movies() {
@@ -15,10 +14,12 @@ export default function Movies() {
 
   return (
     <div className="relative">
-      <h1 className="text-2xl py-4">Marvelous Movies</h1>
-      <div className="mt-10 grid grid-cols-1 gap-4 lg:grid-cols-4 lg:gap-8">
-        {movies.map((movie) => (
-          <MovieCard key={movie.id} {...movie} />
+      <h1 className="text-3xl xs:text-4xl font-bold py-4 text-purple-900 mt-6">
+        Marvelous Movies
+      </h1>
+      <div className="mt-10 grid gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 lg:gap-5">
+        {movies.map((movie: object, id: number) => (
+          <MovieCard key={id} {...movie} />
         ))}
       </div>
     </div>

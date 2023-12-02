@@ -15,8 +15,8 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
 }) => {
   return (
     <div
-      className={`relative mx-4 mt-4 overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg ${
-        variant === "default" ? "mh-84 w-84" : "mh-32 w-24"
+      className={`relative overflow-hidden rounded-xl bg-white bg-clip-border text-gray-700 shadow-lg ${
+        variant === "default" ? "h-84 w-full" : "h-32 w-24"
       }`}
     >
       {withClear && onClear && (
@@ -30,7 +30,7 @@ const CharacterCard: React.FC<CharacterCardProps> = ({
       <img src={portrait} alt={name} draggable="false" />
       <h4
         className={`mb-2 block font-sans font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased ${
-          variant === "default" ? "text-xl" : "text-medium"
+          variant === "default" ? "text-sm xs:text-base md:text-lg lg:text-xl" : "text-medium"
         }`}
       >
         {name}

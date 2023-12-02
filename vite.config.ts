@@ -1,17 +1,25 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import path from "path";
+
+const aliases = [`components`, `assets`, `pages`, `lib`, `public`];
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  envPrefix: 'VITE_',
+  envPrefix: "VITE_",
   plugins: [react()],
   server: {
-    port: 3000
+    port: 3000,
+  },
+  resolve: {
+    alias: aliases.map((alias) => ({
+      find: `@${alias}`,
+      replacement: path.resolve(__dirname, `src/${alias}`),
+    })),
   },
   test: {
-    environment: 'jsdom',
-    setupFiles: ['./tests/setup.ts'],
-    testMatch: ['./tests/**/*.test.tsx'],
-    globals: true
-  }
-})
+    globals: true,
+    environment: "jsdom",
+    setupFiles: "./__tests__/setup",
+  },
+});
