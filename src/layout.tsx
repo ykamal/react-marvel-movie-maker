@@ -62,6 +62,12 @@ export default function Layout() {
         </div>
       </header>
       <Outlet />
+
+      <div className="mt-5">
+        <p>
+          <small>Data provided by Marvel. © 2014 Marvel</small>
+        </p>
+      </div>
     </>
   );
 }
