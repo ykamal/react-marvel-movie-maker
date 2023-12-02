@@ -6,8 +6,8 @@ import "swiper/css/navigation";
 import { Navigation } from "swiper/modules";
 
 import { Character } from "../../context/types";
-import CharacterCard from "./characterCard";
-import Draggable from "./draggable";
+import CharacterCard from "./CharacterCard";
+import Draggable from "./Draggable";
 
 interface CharacterListProps {
   loading: boolean;

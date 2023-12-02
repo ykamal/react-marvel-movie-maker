@@ -1,5 +1,6 @@
-import { Character, Movie } from "../../context/types";
+import { Character, Movie } from "@context/types";
 import React, {
+  FormEvent,
   useContext,
   useEffect,
   useReducer,
@@ -7,15 +8,12 @@ import React, {
   useState,
 } from "react";
 import { redirect } from "react-router-dom";
-import nameSearch from "../../lib/api";
-import CharacterCard from "./characterCard";
-import Droppable from "./droppable";
-import { RootContext } from "../../context/root-context";
-import CharacterList from "./characterList";
-import {
-  ACTIONS,
-  movieFormReducer,
-} from "../../context/reducers/movieFormReducer";
+import { nameSearch } from "@lib/api";
+import CharacterCard from "./CharacterCard";
+import Droppable from "./Droppable";
+import { RootContext } from "@context/root-context";
+import CharacterList from "./CharacterList";
+import { ACTIONS, movieFormReducer } from "@context/reducers/movieFormReducer";
 
 interface MovieProps {
   movie?: Movie;
@@ -130,7 +128,7 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
     }
   };
 
-  const handleSubmit = (e: SubmitEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (movieData.status === "DRAFT")
       stateDispatch({ type: ACTIONS.SET_STATUS, payload: "SAVED" });
@@ -183,13 +181,6 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
               <h1 className="text-left text-2xl font-bold text-purple-900 sm:text-3xl">
                 {isNew ? "Add a new movie" : `Update Movie`}
               </h1>
-
-              <button
-                type="submit"
-                className="hidden sm:block justify-center rounded-lg bg-purple-900 px-5 py-3 font-medium text-white"
-              >
-                {movieData.status === "SAVED" ? "UPDATE" : "SAVE"}
-              </button>
             </div>
             <div>
               <label className="sr-only" htmlFor="title">
@@ -232,15 +223,6 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
               ></textarea>
             </div>
 
-            <div className="btn sm:hidden flex justify-end mb-4">
-              <button
-                type="submit"
-                className="rounded-lg bg-purple-900 px-5 py-3 font-medium text-white"
-              >
-                {movieData.status === "SAVED" ? "UPDATE" : "SAVE"}
-              </button>
-            </div>
-
             {/* Cast */}
             <div className="hidden lg:grid lg:grid-cols-11 lg:gap-8">
               <h2
@@ -266,6 +248,7 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
                     loading ? "bg-gray-200" : ""
                   }`}
                   placeholder="Search for characters"
+                  data-testid="characterSearch"
                   type="text"
                   disabled={loading}
                   value={name}
@@ -310,6 +293,15 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
                   ))}
                 </div>
               </div>
+            </div>
+
+            <div className="btn mb-4">
+              <button
+                type="submit"
+                className="block rounded-lg bg-purple-900 px-5 py-3 font-medium text-white"
+              >
+                {movieData.status === "SAVED" ? "UPDATE" : "SAVE"}
+              </button>
             </div>
           </form>
         </div>

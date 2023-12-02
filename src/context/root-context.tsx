@@ -50,7 +50,7 @@ const moviesReducer = (
 };
 
 // Create context
-export const RootContext = createContext();
+export const RootContext = createContext({ state: {}, dispatch: () => {} });
 
 // Create provider component
 export const RootContextProvider = ({ children }) => {

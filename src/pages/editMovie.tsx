@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import MovieForm from "../components/movieForm/movieForm";
+import MovieForm from "../components/movieForm/MovieForm";
 import { RootContext } from "../context/root-context";
 import { useContext } from "react";
 

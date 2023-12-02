@@ -18,7 +18,9 @@ export default function MenuLinks() {
   const links = menuLinks.map((link) => (
     <li key={link.href}>
       <Link
-        className={`text-gray-500 transition  py-2 flex w-full hover:text-gray-500/75 text-lg ${pathname === link.href ? "text-purple-900 font-bold" : ""}`}
+        className={`text-gray-500 transition  py-2 flex w-full hover:text-gray-500/75 text-lg ${
+          pathname === link.href ? "text-purple-900 font-bold" : ""
+        }`}
         to={link.href}
       >
         {link.title}
@@ -28,7 +30,9 @@ export default function MenuLinks() {
 
   return (
     <nav aria-label="Global">
-      <ul className="flex flex-col xs:flex-row xs:items-center xs:gap-6 text-sm xs:ml-4">{links}</ul>
+      <ul className="flex flex-col xs:flex-row xs:items-center xs:gap-6 text-sm xs:ml-4">
+        {links}
+      </ul>
     </nav>
   );
 }

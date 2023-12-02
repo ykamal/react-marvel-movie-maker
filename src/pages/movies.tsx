@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import { RootContext } from "../context/root-context";
-import NoMoviesFound from "../components/movies/noMoviesFound";
-import CharacterCard from "../components/movieForm/characterCard";
-import MovieCard from "../components/movies/movieCard";
+import { RootContext } from "@context/root-context";
+import NoMoviesFound from "@components/movies/noMoviesFound";
+import CharacterCard from "@components/movieForm/CharacterCard";
+import MovieCard from "@components/movies/movieCard";
 
 export default function Movies() {
   const {

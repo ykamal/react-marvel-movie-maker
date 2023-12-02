@@ -1,4 +1,4 @@
-import MovieForm from "../components/movieForm/movieForm";
+import MovieForm from "../components/movieForm/MovieForm";
 
 export default function NewMovie() {
   return <MovieForm />;

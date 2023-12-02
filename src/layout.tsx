@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import Logo from "./components/header/Logo";
-import MenuLinks from "./components/header/menuLinks";
+import MenuLinks from "@components/header/MenuLinks";
 
 export default function Layout() {
   const [showMenu, setShowMenu] = useState(false);
