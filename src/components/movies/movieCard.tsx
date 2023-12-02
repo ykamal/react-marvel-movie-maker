@@ -23,7 +23,9 @@ const MovieCard: React.FC<MovieProps> = ({
 
         {/* Movie Title Heading */}
         <h3 className="text-lg font-bold text-slate-800 sm:text-xl">{title}</h3>
-        <p className="mt-1 text-xs font-medium text-slate-500">{synopsis}</p>
+        <p className="mt-1 text-xs font-medium text-slate-500 h-[60px]">
+          {synopsis}
+        </p>
 
         {/* desktop */}
         <div className="hidden xs:flex justify-between w-full mt-10 md:px-2 mx-auto">

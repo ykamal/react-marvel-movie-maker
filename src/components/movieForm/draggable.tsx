@@ -24,6 +24,11 @@ const Draggable: React.FC<DraggableProps> = ({
         e.preventDefault();
         !!dragStop && dragStop(uid);
       }}
+      onTouchStart={() => dragStart(uid)}
+      onTouchEnd={(e) => {
+        e.preventDefault();
+        !!dragStop && dragStop(uid);
+      }}
     >
       {children}
     </div>

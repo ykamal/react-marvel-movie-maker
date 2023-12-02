@@ -23,8 +23,14 @@ const Droppable: React.FC<DroppableProps> = ({ title, children, onDrop }) => {
         setDraggedOver(false);
         onDrop();
       }}
+      onTouchMove={() => {
+        setDraggedOver(false);
+        onDrop();
+      }}
     >
-      <h3 className="text-lg text-left px-1 font-semibold text-slate-800">{title}</h3>
+      <h3 className="text-lg text-left px-1 font-semibold text-slate-800">
+        {title}
+      </h3>
 
       <div className="flex flex-row gap-4 mt-2">{children}</div>
     </div>
