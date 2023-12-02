@@ -1,30 +1,18 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Marvel Movie Maker
 
-Currently, two official plugins are available:
+This is a demo project that lets you create hypothetical movies using Vite, React, Typescript, Vitest and Marvel's developer API.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+On the homepage, you can see your movies with the cast information. On the create/edit pages, you can arrange your cast by searching and dragging them over the specific areas.
 
-## Expanding the ESLint configuration
+The goal is to demonstrate javascript code in react. The UI looks ...decent, but not amazing as that was not a goal for this project.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## Inspiration
 
-- Configure the top-level `parserOptions` property like this:
+- **No Frameworks**: To refrain from using React frameworks like Remix or Next. To simply use Vite to create a fast react application to demonstrate that ability.
+- **Demonstrate HTML API usage without any libraries**: The project uses HTML `Drag & Drop` API usage without using any NPM libraries. To also demonstrate limits on such action by a MAX parameter on the droppable component.
+- **No UI Libraries**: To simplify CSS styling, I am using `Tailwind`. But no other UI libraries should be in use. To demonstrate matters like `animation` and `grid` with `responsiveness`.
+- **FAST testing with Vitest**: To demonstrate fast testing with `Vitest`.
+- **Demonstrate advanced Vite concepts**: Concepts such as `Aliasing` and common patterns such as environmental variables.
+- **Demonstrate State Management**: This project uses React's `Context API` with `reducer pattern` to manage both `App` and `Ephimeral` state.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
-
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
