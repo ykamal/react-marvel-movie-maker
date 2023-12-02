@@ -14,8 +14,6 @@ const MovieCard: React.FC<MovieProps> = ({
   return (
     <div key={id} className="mb-1">
       {/* Heading for each Movie Card */}
-      <h2 className="text-lg font-bold text-purple-900 mb-2">Movie</h2>
-
       <Link
         to={`/movies/${id}/edit`}
         className="relative movie-card overflow-hidden rounded-lg border border-gray-100f p-4 w-full sm:w-full transition-all duration-300 hover:shadow-2xl xs:h-[240px] flex flex-col gap-2 card-gradient-bg max-w-[22rem] sm:max-w-full m-auto"

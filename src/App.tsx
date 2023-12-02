@@ -4,8 +4,11 @@ import Layout from "./layout";
 import Movies from "./pages/movies";
 import NewMovie from "./pages/NewMovie";
 import EditMovie from "./pages/editMovie";
+import useTitle from "@hooks/useTitle";
 
 function App() {
+  useTitle();
+
   return (
     <BrowserRouter>
       <Routes>
