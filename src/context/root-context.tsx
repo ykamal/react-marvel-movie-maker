@@ -1,9 +1,10 @@
 import React, { Dispatch, createContext, useEffect, useReducer } from "react";
 import { Movie } from "./types";
+import defaultMovies from "@lib/movieSeeds";
 
 const getMoviesFromLocalstorage = () => {
   const movies = localStorage.getItem("yk_movies");
-  return movies ? JSON.parse(movies) : [];
+  return movies ? JSON.parse(movies) : defaultMovies;
 };
 
 // Define initial state
