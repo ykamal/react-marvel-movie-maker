@@ -45,7 +45,7 @@ const CharacterList: React.FC<CharacterListProps> = ({
       )}
       {/* desktop */}
       <div className="hidden lg:block py-3  card-gradient-bg rounded-md">
-        <div className="wrap min-h-[300px] max-h-[500px] overflow-y-auto overflow-x-hidden styledScrollBar px-2 grid gap-4 rounded-md">
+        <div className="wrap min-h-[650px] max-h-[650px] overflow-y-auto overflow-x-hidden styledScrollBar px-2 grid gap-4 rounded-md">
           {characters.map((character) => (
             <Draggable
               key={character.id}
@@ -59,23 +59,30 @@ const CharacterList: React.FC<CharacterListProps> = ({
       </div>
 
       {/* mobile */}
-      <div className="mobile overflow-hidden lg:hidden">
+      <div className="mobile-drag p-2 py-4 overflow-hidden lg:hidden rounded-lg mb-4">
         <Swiper
           breakpoints={{
             0: {
               slidesPerView: 1,
             },
 
-            350: {
+            280: {
               slidesPerView: 2,
             },
 
-            420: {
+            480: {
               slidesPerView: 3,
             },
 
-            768: {
+            560: {
               slidesPerView: 4,
+            },
+
+            768: {
+              slidesPerView: 5,
+            },
+            984: {
+              slidesPerView: 5,
             },
           }}
           noSwiping={true}
@@ -84,7 +91,7 @@ const CharacterList: React.FC<CharacterListProps> = ({
           spaceBetween={20}
           allowTouchMove={false}
           noSwipingClass="swiper-no-swiping"
-          className="overflow-hidden max-w-[86vw] md:max-w-[82vw]"
+          className="overflow-hidden w-[80vw] sm:max-w-[86vw] md:max-w-[82vw]"
         >
           {characters.map((character) => (
             <SwiperSlide key={character.id}>

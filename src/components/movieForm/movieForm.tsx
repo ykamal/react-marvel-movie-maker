@@ -171,7 +171,7 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
   return (
     <section id="movieForm">
       <div className="mx-auto max-w-screen-xl xs:px-4 py-16 md:px-6 lg:px-8">
-        <div className="rounded-lg bg-white md:p-8 shadow-lg">
+        <div className="rounded-lg md:p-8 lg:shadow-lg">
           <form
             action="#"
             className="space-y-4"
@@ -263,7 +263,7 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
                   }
                 />
               </div>
-              <div className="min-h-[150px] rounded-lg  lg:col-span-9">
+              <div className="lg:min-h-[220px] h-full rounded-lg lg:col-span-9">
                 <div className="heading lg:hidden mb-4">
                   <p
                     className="text-start font-bold
@@ -273,7 +273,7 @@ const MovieForm: React.FC<MovieProps> = ({ movie }) => {
                     below sections.You can also search for a character
                   </p>
                 </div>
-                <div className="wrap flex flex-col lg:grid h-full gap-2">
+                <div className="wrap flex flex-col lg:grid h-full gap-2 pb-10 lg:pb-0">
                   {castRows.map(({ title, max, data }) => (
                     <Droppable
                       key={title}

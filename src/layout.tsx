@@ -13,12 +13,12 @@ export default function Layout() {
   }, [pathname]);
   return (
     <>
-      <header className="bg-purple-900/10 rounded-xl">
+      <header className="rounded-xl ring ring-purple-200/70">
         <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
           <div className="flex py-2.5 sm:py-3 md:py-4 justify-between gap-4 md:gap-12">
             <div
               onClick={() => setShowMenu(false)}
-              className="logo-wrapper flex justify-center items-end"
+              className="logo-wrapper flex justify-center items-center"
             >
               <Logo />
             </div>

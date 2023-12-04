@@ -40,7 +40,7 @@ describe("Character Card", () => {
     const characterName = screen.getByText(/Test Character/i);
     expect(characterName).toBeInTheDocument();
 
-    const clearButton = screen.getByText(/×/i);
+    const clearButton = screen.getByTestId("clearBtn");
     expect(clearButton).toBeInTheDocument();
 
     fireEvent.click(clearButton);

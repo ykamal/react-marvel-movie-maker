@@ -9,7 +9,7 @@ This is a demo project that lets you create hypothetical movies using Vite, Reac
 
 On the homepage, you can see your movies with the cast information. On the create/edit pages, you can arrange your cast by searching and dragging them over the specific areas.
 
-The goal is to demonstrate javascript code in react. The UI looks ...decent, but not amazing as that was not a goal for this project.
+The goal is to demonstrate javascript code in react. The UI looks ...okay, but not amazing as that was not a goal for this project.
 
 ## Inspiration
 - **No Frameworks**: To refrain from using React frameworks like Remix or Next. To simply use Vite to create a fast react application to demonstrate that ability. Demonstrate usage of default and custom react hooks.
