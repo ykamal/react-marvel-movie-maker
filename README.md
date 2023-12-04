@@ -3,7 +3,7 @@
 
 # Marvel Movie Maker
 
-  
+![preview](public/preview.gif)
 
 This is a demo project that lets you create hypothetical movies using Vite, React, Typescript, Vitest and [Marvel's  API](https://developer.marvel.com/)
 
